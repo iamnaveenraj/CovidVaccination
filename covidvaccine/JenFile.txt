@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+  tools
+   {
+    maven 'Maven'
+   }
+    stages {
+	
+		stage('Checkout') 
+		{
+			steps 
+			{
+				git branch: 'master',
+				credentialsId: 'af3733d5-1b5a-4838-9e8b-f539f419277b',
+				url: 'https://github.com/iamnaveenraj/CovidVaccination.git'
+			}
+		}
+		stage('Build')
+		{
+			steps
+			{
+				script
+				{
+					bat 'mvn  compile'
+				}
+			}
+		}
+		stage('Test')
+		{
+			steps
+			{
+				script
+				{
+					bat 'mvn test'
+				}
+			}
+		}
+		stage('Package')
+		{
+			steps
+			{
+				script
+				{
+					bat 'mvn package '
+				}
+			}
+		}
+
+    }
+}
